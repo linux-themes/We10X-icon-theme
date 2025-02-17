@@ -1,9 +1,14 @@
-mkdir -p $PWD/release
+ROOT=$PWD
+mkdir $ROOT/release
+
 $PWD/install.sh -a -d $PWD/release
-tar -czvf $PWD/release/We10X.tar.xz $PWD/release
-for directory in $PWD/release/*; do
-  if [[ "$directory" == *"We10X.tar.xz"* ]]; then
-    continue
-  fi
-  tar -czvf "${directory%/}.tar.xz" "$directory"
+
+cd $ROOT/release
+tar -cJvf $ROOT/We10X.tar.xz *
+
+for DIRECTORY in $ROOT/release/*; do
+    cd $DIRECTORY
+    tar -cJvf $DIRECTORY.tar.xz *
 done
+
+mv $ROOT/We10X.tar.xz $ROOT/release
